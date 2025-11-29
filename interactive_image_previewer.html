@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Image Previewer</title>
+    <!-- Load Tailwind CSS for utility-first styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Ensure the background image of the preview area covers the element and is centered */
+        #preview-pic {
+            background-size: cover;
+            background-position: center;
+            /* Smooth transition for background image change */
+            transition: background-image 0.5s ease-in-out; 
+            min-height: 400px; /* Minimum height for the preview area */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4); /* Add shadow to text for readability */
+        }
+
+        /* Thumbnail image styling */
+        .thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .thumbnail:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col items-center p-4 font-sans">
+
+    <div class="max-w-5xl w-full">
+        <h1 class="text-5xl font-extrabold text-gray-900 text-center mb-10 mt-6 tracking-tight">Image Preview Widget</h1>
+
+        <!-- Section 1: The Preview Area (Target element for updates) -->
+        <div id="preview-pic" 
+             class="bg-indigo-50 rounded-2xl shadow-2xl border-4 border-indigo-400 mb-10 p-8 text-center text-2xl font-semibold text-indigo-800">
+            Hover over an image below to display it here.
+        </div>
+
+        <!-- Section 2: Thumbnail Gallery -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            
+            <!-- Thumbnail 1 -->
+            <div class="rounded-xl overflow-hidden shadow-xl hover:shadow-2xl bg-white p-2 transform transition-all duration-300">
+                <img class="thumbnail"
+                     src="https://placehold.co/600x400/10b981/ffffff?text=Forest+Path"
+                     alt="A beautiful, sunlit forest path in autumn."
+                     onmouseover="update(this)"
+                     onmouseout="undo()">
+            </div>
+            
+            <!-- Thumbnail 2 -->
+            <div class="rounded-xl overflow-hidden shadow-xl hover:shadow-2xl bg-white p-2 transform transition-all duration-300">
+                <img class="thumbnail"
+                     src="https://placehold.co/600x400/ef4444/ffffff?text=Mountain+View"
+                     alt="A stunning view of snow-capped mountains at sunrise."
+                     onmouseover="update(this)"
+                     onmouseout="undo()">
+            </div>
+            
+            <!-- Thumbnail 3 -->
+            <div class="rounded-xl overflow-hidden shadow-xl hover:shadow-2xl bg-white p-2 transform transition-all duration-300">
+                <img class="thumbnail"
+                     src="https://placehold.co/600x400/3b82f6/ffffff?text=Ocean+Wave"
+                     alt="A close-up shot of a crashing blue ocean wave."
+                     onmouseover="update(this)"
+                     onmouseout="undo()">
+            </div>
+
+            <!-- Thumbnail 4 -->
+            <div class="rounded-xl overflow-hidden shadow-xl hover:shadow-2xl bg-white p-2 transform transition-all duration-300">
+                <img class="thumbnail"
+                     src="https://placehold.co/600x400/f59e0b/000000?text=Desert+Dunes"
+                     alt="Warm, golden desert dunes under a clear sky."
+                     onmouseover="update(this)"
+                     onmouseout="undo()">
+            </div>
+        </div>
+
+        <p class="text-center text-sm text-gray-500 mt-8">Code structure follows the provided steps (1-5).</p>
+
+    </div>
+
+    <script>
+        // 1. Start by retrieving the canvas. Use this file as your example.
+        const previewPic = document.getElementById('preview-pic');
+
+        // Store the initial state for the undo function (Step 4)
+        const initialBackgroundStyle = window.getComputedStyle(previewPic).backgroundImage;
+        const originalText = "Hover over an image below to display it here.";
+        previewPic.textContent = originalText;
+
+
+        /**
+         * 3. Start by coding the logic for the update() function.
+         * Updates the background image and text content of the preview div.
+         * This function should be called on 'mouseover'.
+         * @param {HTMLImageElement} image - The thumbnail image element being hovered over (this).
+         */
+        function update(image) {
+            // 3.a. I highly recommend starting with console.log() to check if your event is firing.
+            // 3.b. Next, I recommend using console.log() to output some info about PreviewPic, specifically the alt and source.
+            console.log('Update function triggered.');
+            console.log('Image Alt (Text):', image.alt);
+            console.log('Image Source (URL):', image.src);
+            
+            // 3.e. Use Document.querySelector or Document.getElementById to replace the background image of the element with the image ID.
+            // Set the background image style using the thumbnail's src
+            previewPic.style.backgroundImage = `url('${image.src}')`;
+            
+            // Add utility classes to style the text when an image is present
+            previewPic.classList.add('text-white', 'text-shadow-md', 'bg-opacity-70'); 
+            
+            // 3.c. Use Document.querySelector or Document.getElementById to replace the text of the element with the image ID.
+            // Set the description text using the thumbnail's alt text
+            previewPic.innerHTML = `<span class="p-4 rounded-lg bg-black bg-opacity-40 text-3xl font-bold">${image.alt}</span>`;
+            
+            // 3.d. Check your work (done via console.log above).
+        }
+
+        /**
+         * 4. Code the functionality for the undo function.
+         * Resets the preview div to its initial state.
+         * This function should be called on 'mouseout'.
+         */
+        function undo() {
+            // 4.a. Update the background url for the image id div back to the original background value: url("").
+            // Reset the background to its initial state (usually 'none')
+            previewPic.style.backgroundImage = initialBackgroundStyle; 
+
+            // 4.b. Update the text of the image id div back to the original text: "Hover over an image below to display it here."
+            previewPic.textContent = originalText;
+            
+            // Remove utility classes for text styling
+            previewPic.classList.remove('text-white', 'text-shadow-md', 'bg-opacity-70');
+
+            // 4.c. Check your work. If it is not working, use console.log to double-check the values you are using.
+            console.log('Undo function triggered. State reset.');
+        }
+
+        // 5. Save and share your webpage - using CodePen or the web storage of your choice.
+    </script>
+
+</body>
+</html>
