@@ -1,0 +1,88 @@
+/* 3. Style for the <body> tag: modifying font-family and font-size properties. */
+body {
+    font-family: Arial, sans-serif;
+    font-size: 16px; /* A base font size */
+    margin: 0; /* Remove default body margin */
+    line-height: 1.6; /* Default line height for readability */
+    color: #333; /* Default text color */
+}
+
+/* 4. Style for the <header> tag: modifying the background property. */
+header {
+    background-color: #4CAF50; /* A green background */
+    color: white; /* White text for contrast */
+    padding: 20px 0;
+    text-align: center;
+}
+
+/* 5. Style for the <nav> tag: modifying the color property (text color). */
+nav {
+    background-color: #333; /* Dark background for the navigation bar */
+    padding: 10px 0;
+}
+
+nav a {
+    color: white; /* Text color is white */
+    text-decoration: none;
+    padding: 10px 15px;
+    display: inline-block;
+}
+
+nav a:hover {
+    background-color: #575757;
+}
+
+/* 6. Style for the <main> tag: modifying background-color and font-size properties. */
+main {
+    background-color: #f4f4f4; /* Light grey background for the main content area */
+    font-size: 1.05em; /* Slightly larger font size */
+    padding: 20px;
+    min-height: 400px; /* Ensure main content takes up vertical space */
+}
+
+/* 7. Style for the <footer> tag: modifying the color property (text color). */
+footer {
+    background-color: #333;
+    color: #ccc; /* Text color is light grey */
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* 8. Style for the <li> tag: modifying display and width properties. */
+/* Applied to the list items within the <nav> for a horizontal menu */
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+nav li {
+    display: inline-block; /* Display items side-by-side */
+    width: 120px; /* Set a fixed width for each navigation item */
+    text-align: center;
+}
+
+/* 9. Style for the <h1> tag: modifying text-align, font-family, and color properties. */
+h1 {
+    text-align: center;
+    font-family: Georgia, serif; /* Different font-family for headings */
+    color: #00796B; /* A teal color */
+    margin-top: 0; /* Remove top margin from the header h1 */
+}
+
+/* 10. Style for the <p> tag: modifying the line-height property. */
+p {
+    line-height: 1.8; /* Increased line height for paragraphs for better reading */
+}
+
+/* Additional styling for clarity */
+section {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    background-color: white;
+}
