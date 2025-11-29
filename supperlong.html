@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Image Previewer - Accessibility Edition</title>
+    <!-- Load Tailwind CSS for utility-first styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Styles for the main preview area */
+        #preview-pic {
+            background-size: cover;
+            background-position: center;
+            transition: background-image 0.5s ease-in-out; 
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Styles for the thumbnail images */
+        .thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            /* Highlight focus state for keyboard navigation */
+            outline: 2px solid transparent; 
+            outline-offset: 2px;
+        }
+
+        /* Styles when thumbnail is hovered or focused */
+        .thumbnail:hover, .thumbnail:focus {
+            transform: scale(1.05);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+            outline-color: #3b82f6; /* Tailwind blue-500 */
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col items-center p-4 font-sans">
+
+    <div class="max-w-6xl w-full">
+        <h1 class="text-5xl font-extrabold text-gray-900 text-center mb-10 mt-6 tracking-tight">Interactive Image Preview Widget</h1>
+
+        <!-- Section 1: The Preview Area (Target element for updates) -->
+        <div id="preview-pic" 
+             class="bg-indigo-50 rounded-2xl shadow-2xl border-4 border-indigo-400 mb-10 p-8 text-center text-2xl font-semibold text-indigo-800">
+            Hover over or focus on an image below to display it here.
+        </div>
+
+        <!-- Section 2: Thumbnail Gallery -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6" id="image-gallery">
+            
+            <!-- Six (6) Image Thumbnails (Step 2) -->
+            <div class="rounded-xl overflow-hidden shadow-xl bg-white p-1">
+                <img class="thumbnail" id="img1"
+                     src="https://placehold.co/600x400/10b981/ffffff?text=Forest+Path"
+                     alt="A beautiful, sunlit forest path in autumn."
+                     />
+            </div>
+            
+            <div class="rounded-xl overflow-hidden shadow-xl bg-white p-1">
+                <img class="thumbnail" id="img2"
+                     src="https://placehold.co/600x400/ef4444/ffffff?text=Mountain+View"
+                     alt="A stunning view of snow-capped mountains at sunrise."
+                     />
+            </div>
+            
+            <div class="rounded-xl overflow-hidden shadow-xl bg-white p-1">
+                <img class="thumbnail" id="img3"
+                     src="https://placehold.co/600x400/3b82f6/ffffff?text=Ocean+Wave"
+                     alt="A close-up shot of a crashing blue ocean wave."
+                     />
+            </div>
+
+            <div class="rounded-xl overflow-hidden shadow-xl bg-white p-1">
+                <img class="thumbnail" id="img4"
+                     src="https://placehold.co/600x400/f59e0b/000000?text=Desert+Dunes"
+                     alt="Warm, golden desert dunes under a clear sky."
+                     />
+            </div>
+
+            <div class="rounded-xl overflow-hidden shadow-xl bg-white p-1">
+                <img class="thumbnail" id="img5"
+                     src="https://placehold.co/600x400/8b5cf6/ffffff?text=Northern+Lights"
+                     alt="Aurora borealis lighting up the night sky."
+                     />
+            </div>
+
+            <div class="rounded-xl overflow-hidden shadow-xl bg-white p-1">
+                <img class="thumbnail" id="img6"
+                     src="https://placehold.co/600x400/ec4899/ffffff?text=Tropical+Sunset"
+                     alt="Vibrant tropical sunset over a calm sea."
+                     />
+            </div>
+        </div>
+
+        <p class="text-center text-sm text-gray-500 mt-8">
+            Test functionality by moving the mouse (Step 7) and checking keyboard accessibility (Step 10).
+        </p>
+
+    </div>
+
+    <script>
+        // Global references and initial state storage
+        const previewPic = document.getElementById('preview-pic');
+        let initialBackgroundStyle;
+        let originalText;
+
+        /**
+         * Step 8. Add an onload listener - decide what new function you want to call.
+         * We use this function to set up initial state and add event listeners.
+         */
+        function initializeApp() {
+            console.log('App initialization started...');
+            
+            // Set initial state values for the undo function
+            initialBackgroundStyle = window.getComputedStyle(previewPic).backgroundImage;
+            originalText = previewPic.textContent.trim();
+            console.log('Original Text Stored:', originalText);
+
+            // Step 9. Add new functionality to add the tabfocus attribute
+            addFocusAccessibility();
+
+            // Step 6. Add event listeners for Onmouseover, Onfocus, and Onmouseleave, Onblur
+            addEventListenersToThumbnails();
+
+            console.log('App initialization complete.');
+        }
+
+        /**
+         * Step 9.a, 9.b, 9.c: Adds tabindex attribute to each image for keyboard navigation.
+         */
+        function addFocusAccessibility() {
+            // 9.b. Write a for loop to iterate through each image
+            const images = document.querySelectorAll('.thumbnail');
+            
+            // 9.a. Add a console.log message to ensure your event fires
+            console.log('Adding tabindex to all thumbnails...');
+
+            // The loop applies tabindex to make the images focusable
+            for (let i = 0; i < images.length; i++) {
+                // 9.c. Add the tabindex attribute
+                images[i].setAttribute('tabindex', 0); // tabindex=0 makes the element focusable and part of the sequential keyboard navigation
+            }
+        }
+
+        /**
+         * Step 6. Adds the necessary event listeners for both mouse and keyboard focus.
+         */
+        function addEventListenersToThumbnails() {
+            const images = document.querySelectorAll('.thumbnail');
+            
+            // Loop through images and attach the listeners
+            images.forEach(image => {
+                // Mouse events (for step 7)
+                image.addEventListener('mouseover', () => update(image));
+                image.addEventListener('mouseout', undo);
+
+                // Focus events (for step 6 and 10)
+                image.addEventListener('focus', () => update(image));
+                image.addEventListener('blur', undo);
+            });
+        }
+
+
+        /**
+         * Updates the preview area when an image is hovered (mouseover) or focused (focus).
+         * @param {HTMLImageElement} image - The image element triggering the update.
+         */
+        function update(image) {
+            // Log for debugging
+            console.log('Update triggered by:', image.alt);
+            
+            // Update the background image (Step 3.e)
+            previewPic.style.backgroundImage = `url('${image.src}')`;
+            
+            // Update the text content (Step 3.c)
+            // We use innerHTML here to style the alt text nicely on top of the image
+            previewPic.innerHTML = `<span class="p-4 rounded-lg bg-black bg-opacity-50 text-white text-3xl font-bold transition-opacity duration-500">${image.alt}</span>`;
+            
+            // Add utility classes for visual consistency
+            previewPic.classList.add('text-white', 'text-shadow-md', 'bg-opacity-70');
+        }
+
+        /**
+         * Resets the preview area when the mouse leaves (mouseout) or focus is lost (blur).
+         */
+        function undo() {
+            // 4.a. Reset the background URL
+            previewPic.style.backgroundImage = initialBackgroundStyle; 
+
+            // 4.b. Reset the text content
+            previewPic.textContent = originalText;
+            
+            // Remove utility classes
+            previewPic.classList.remove('text-white', 'text-shadow-md', 'bg-opacity-70');
+
+            console.log('Undo function triggered. State reset.');
+        }
+
+        // Event listener for Step 8: Call initializeApp when the page finishes loading
+        window.addEventListener('load', initializeApp);
+
+    </script>
+
+</body>
+</html>
