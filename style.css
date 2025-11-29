@@ -1,0 +1,84 @@
+/* ======================================= */
+/* 1. DEFAULT STYLES: MOBILE-FIRST (< 768px) */
+/* ======================================= */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.container {
+    padding: 10px;
+}
+
+/* Divs take up full width on mobile */
+.content, .sidebar {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 15px;
+    box-sizing: border-box; /* Ensures padding doesn't increase total width */
+}
+
+.content {
+    background-color: #fff;
+}
+
+.sidebar {
+    background-color: #eee;
+    color: #333;
+}
+
+/* Images always take up the full width of their parent div */
+img {
+    max-width: 100%;
+    height: auto; /* Maintains aspect ratio */
+    display: block;
+    margin-top: 10px;
+}
+
+/* =================================== */
+/* 2. MEDIA QUERY 1 (STEP 5): TABLET AND UP */
+/* =================================== */
+@media screen and (min-width: 768px) {
+    .container {
+        /* Use Flexbox to place content and sidebar side-by-side */
+        display: flex;
+        max-width: 1000px; /* Center and limit the total width */
+        margin: 0 auto;
+    }
+    
+    /* Adjust width division for the two columns */
+    .content {
+        width: 70%; /* Content takes 70% */
+        margin-right: 20px;
+        margin-bottom: 0;
+    }
+
+    .sidebar {
+        width: 30%; /* Sidebar takes 30% */
+        margin-bottom: 0;
+    }
+}
+
+/* ===================================== */
+/* 3. MEDIA QUERY 2 (STEP 7): LARGE DESKTOP */
+/* ===================================== */
+@media screen and (min-width: 1200px) {
+    .container {
+        max-width: 1400px; /* Expand the container width for larger screens */
+    }
+
+    /* Further adjust width division for extra large screens */
+    .content {
+        width: 75%; 
+    }
+
+    .sidebar {
+        width: 25%;
+    }
+    
+    /* Example: Adjust font size for larger readability */
+    h1 {
+        font-size: 32px;
+    }
+}
