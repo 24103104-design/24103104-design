@@ -1,0 +1,151 @@
+/* --- BASE STYLES (MOBILE FIRST) --- */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background: #333;
+    color: white;
+    padding: 1em;
+    text-align: center;
+}
+
+nav ul {
+    padding: 0;
+    list-style: none;
+    text-align: center;
+}
+
+nav li {
+    /* Stacked links on mobile */
+    margin: 0.5em 0;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5em 1em;
+    display: block; /* Make links full width on mobile */
+}
+
+.container {
+    padding: 1em;
+}
+
+.col-div {
+    /* Mobile First: All divs are 100% width and stacked */
+    width: 100%;
+    margin-bottom: 1em;
+    padding: 1em;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 1em;
+    clear: both; /* Clear floats from preceding elements */
+}
+
+/* --- MEDIA QUERIES (BREAKPOINTS) --- */
+/* The layout gets wider as we go down the CSS file (Mobile First) */
+
+/* Step 9: First Media Query - Small Screens (e.g., Mobile Landscape/Small Tablet) */
+@media screen and (min-width: 600px) {
+    /* 2 columns layout */
+    .col-div {
+        width: 48%; /* Slightly less than 50% to account for margins */
+        float: left;
+        margin-right: 4%; /* Space between columns */
+    }
+
+    .col-div:nth-child(2n) {
+        margin-right: 0; /* No margin on the right edge of every second column */
+    }
+
+    .col-div:nth-child(2n+1) {
+        clear: left; /* Clear float for every odd column to start a new row */
+    }
+}
+
+
+/* Step 11: Second Media Query - Medium Screens (e.g., Standard Tablet) */
+@media screen and (min-width: 768px) {
+    /* 3 columns layout */
+    .col-div {
+        width: 31.33%; /* (100 - 2*3.5) / 3 = ~31.33% */
+        margin-right: 3%;
+        /* Reset 2-column specific rules */
+        clear: none;
+    }
+
+    .col-div:nth-child(2n) {
+        margin-right: 3%; /* Apply margin back to the second column */
+    }
+    
+    .col-div:nth-child(3n) {
+        margin-right: 0; /* No margin on the right edge of every third column */
+        clear: none;
+    }
+
+    .col-div:nth-child(3n+1) {
+        clear: left; /* Start a new row every 3rd column */
+    }
+
+    /* Adjust Nav for Tablet: Horizontal */
+    nav ul {
+        display: flex;
+        justify-content: center;
+    }
+
+    nav li {
+        margin: 0 0.5em;
+    }
+}
+
+
+/* Step 13: Third Media Query - Large Screens (e.g., Desktop/Laptop) */
+@media screen and (min-width: 992px) {
+    /* 4 columns layout */
+    .col-div {
+        width: 23.5%; /* (100 - 3*2) / 4 = 23.5% */
+        margin-right: 2%;
+        /* Reset 3-column specific rules */
+        clear: none;
+    }
+
+    .col-div:nth-child(3n) {
+        margin-right: 2%;
+    }
+
+    .col-div:nth-child(4n) {
+        margin-right: 0; /* No margin on the right edge of every fourth column */
+        clear: none;
+    }
+
+    .col-div:nth-child(4n+1) {
+        clear: left; /* Start a new row every 4th column */
+    }
+}
+
+
+/* Step 15: Fourth Media Query - Extra Large Screens (e.g., Large Monitors) */
+@media screen and (min-width: 1200px) {
+    .container {
+        /* Center content and give it a max width for very large screens */
+        max-width: 1140px;
+        margin: 0 auto; 
+    }
+
+    body {
+        font-size: 17px; /* Slight font size increase for readability */
+    }
+}
